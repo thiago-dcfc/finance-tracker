@@ -11,6 +11,13 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/navbar' %>
+
+    <div class="container mt-4">
+      <div class="row justify-content-md-center">
+        <%= render 'layouts/messages' %>
+      </div>
+      <%= yield %>
+    </div>
   </body>
 </html>

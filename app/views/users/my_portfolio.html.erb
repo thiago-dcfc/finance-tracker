@@ -1,0 +1,23 @@
+<h1 class="mt-4">My Portfolio</h1>
+<div class="mt-5 col-4">
+  <h2>Search stocks</h2>
+  <%= form_tag search_stock_path, remote: true, method: :get do %>
+    <form class="row g-3">
+      <div class="input-group mb-3 col-1">
+        <%= text_field_tag :stock, params[:stock], placeholder: 'Stock ticker', autofocus: true,
+                           class: 'form-control form-control-lg' %>
+        <%= button_tag type: :submit, class: 'btn btn-outline-primary', id: 'button-addon2' do %>
+          <%= fa_icon 'search 2x' %>
+        <% end %>
+      </div>
+    </form>
+  <% end %>
+</div>
+
+<div class="row" id="results"></div>
+<div class="dropdown-divider col-8"></div>
+<%= link_to '#', class: 'btn btn-lg btn-primary' do %>
+  <%= fa_icon 'refresh' %> Refresh prices
+<% end %>
+
+<%= render 'stocks/list' %>

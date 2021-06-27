@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-8">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Ticker</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if !@tracked_stocks.empty? %>
+        <% @tracked_stocks.each do |stock| %>
+          <tr>
+            <th scope="row"><%= stock.ticker %></th>
+            <td><%= stock.name %></td>
+            <td><%= number_to_currency stock.last_price %></td>
+            <td>
+              <% if current_user.can_track_stock?(stock.ticker) %>
+                <%= link_to 'Add  to portfolio', user_stocks_path(user: current_user, ticker: stock.ticker),
+                            class: 'btn btn-success', method: :post %>
+              <% elsif current_user.id != @user.id %>
+                <span class="badge rounded-pill bg-secondary">
+                  You are already tracking
+                  <% if current_user.stock_already_tracked?(stock.ticker) %>
+                    <%= 'this stock' %>
+                  <% elsif !current_user.under_stock_limit? %>
+                    <%= '10 stocks' %>
+                  <% end %>
+                </span>
+              <% end %>
+
+              <% if current_user.id == @user.id %>
+                <%= link_to 'Remove', user_stock_path(stock.id), method: :delete,
+                              data: { confirm: 'Are you sure you want to stop tracking this stock?' },
+                              class: 'btn btn-sm btn-danger' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <th scope="row" colspan="4" class="text-center">No stocks being tracked</th>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

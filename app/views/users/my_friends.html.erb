@@ -1,0 +1,19 @@
+<h1 class="mt-4">My Friends</h1>
+<div class="mt-5 col-4">
+  <h2>Search friends</h2>
+  <%= form_tag search_friend_path, remote: true, method: :get do %>
+    <form class="row g-3">
+      <div class="input-group mb-3 col-1">
+        <%= text_field_tag :value, params[:value], placeholder: 'Search by name or email',
+                           autofocus: true, class: 'form-control form-control-lg' %>
+        <%= button_tag type: :submit, class: 'btn btn-outline-primary', id: 'button-addon2' do %>
+          <%= fa_icon 'search 2x' %>
+        <% end %>
+      </div>
+    </form>
+  <% end %>
+</div>
+
+<div class="row" id="results"></div>
+
+<%= render 'friends/list' %>
